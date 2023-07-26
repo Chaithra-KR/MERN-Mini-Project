@@ -1,5 +1,7 @@
 ### This web application is built using the following technologies: ###
+
 <br>
+
 * MERN stack (MongoDB, Express.js, React.js, Node.js)
 
 * Redux for efficient global state management

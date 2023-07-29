@@ -1,0 +1,98 @@
+/* @import url("https://1fid.com/wp-content/uploads/2022/07/cute-profile-picture-4-1024x1024.jpg"); */
+
+*,
+*::after,
+*::before {
+	font-family: "Poppins", sans-serif;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+.hey {
+	display: flex;
+	height: 80vh;
+	justify-content: center;
+	align-items: center;
+	background-color: #f4e7eb;
+}
+
+.profile-card {
+	width: 350px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding: 2rem;
+	background-color: white;
+	border-radius: 1rem;
+	box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.6);
+}
+
+.profile-image {
+	position: relative;
+    margin-bottom: 1.25rem;
+	top: -55px;
+	border-radius: 1rem;
+	background-image: url(https://plus.unsplash.com/premium_photo-1667667720425-6972aff75f6b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600&display=swap);
+	width: 11rem;
+	height: 11rem;
+	background-position: center;
+	background-size: cover;
+	box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.4);
+}
+
+.profile-info {
+	text-align: center; 
+	margin-top: -3rem;
+	margin-bottom: 1rem;
+}
+
+.profile-info > .profile-name {
+	color: #212121;
+}
+
+.profile-info > .profile-desc {
+	color: #666666;
+	font-size: 0.9rem;
+}
+
+.profile-details {
+    margin-top: 20px;
+  }
+  
+  .profile-details label {
+    font-weight: bold;  
+  }
+  
+  .profile-details span {
+    margin-left: 10px;
+  }
+
+  .upload-button {
+    display: inline-block;
+    position: relative;
+  }
+  
+  .upload-button input[type="file"] {
+    display: none;
+  }
+  
+  .upload-button label {
+    display: inline-block;
+    padding: 5px 5px;
+    background-color: #d58cd4;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .changePic{
+    font-size: 12px;
+  }
+
+  .upload-button img {
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+  }
+  

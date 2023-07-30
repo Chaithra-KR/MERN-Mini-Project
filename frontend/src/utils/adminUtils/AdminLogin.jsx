@@ -5,7 +5,6 @@ import Navbar from '../../components/User-side/Navbar/Navbar';
 const AdminLogin = () => {
   return (
         <Fragment>
-            <Navbar/>
             <Login/>
         </Fragment>
   );

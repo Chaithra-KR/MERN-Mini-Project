@@ -1,23 +1,184 @@
-import React from 'react';
+import React,{useState} from 'react';
 import './UserManaging.css'
 
 const UserManaging = () => {
-  return (
-    <div className="dashboard">
-      <div className="header">Login/Logout</div>
-      <div className="logo">
-        <h1>Blossom</h1>
-      </div>
-      <div className="sidebar">sidebar</div>
-      <div className="bg-gray-200 content p-2">
-        <div className="max-w-3xl m-auto py-8">
-          <h1 className="text-2xl mb-2">Content Title</h1>
-          <div className="w-full rounded shadow-md bg-white p-4"></div>
-        </div>
-      </div>
-      <div className="footer">footer</div>
-    </div>
-  );
+  const productData = [
+    {
+        "id": 1,
+        "image": "http://dummyimage.com/440x620.png/cc0000/ffffff",
+        "name": "Coke - Diet, 355 Ml",
+        "price": 120,
+        "qty": 1,
+    },
+    {
+        "id": 2,
+        "image": "http://dummyimage.com/440x620.png/dddddd/000000",
+        "name": "Pork - Hock And Feet Attached",
+        "price": 150,
+        "qty": 1,
+    },
+    {
+        "id": 3,
+        "image": "http://dummyimage.com/440x620.png/cc0000/ffffff",
+        "name": "Veal - Jambu",
+        "price": 135,
+        "qty": 1,
+    },
+    {
+        "id": 4,
+        "image": "http://dummyimage.com/440x620.png/dddddd/000000",
+        "name": "Almonds Ground Blanched",
+        "price": 110,
+        "qty": 1,
+    },
+    {
+        "id": 5,
+        "image": "http://dummyimage.com/440x620.png/5fa2dd/ffffff",
+        "name": "Passion Fruit",
+        "price": 80,
+        "qty": 1,
+    }
+]
+
+const [products, SetProducts] = useState(productData);
+
+// -----Increment Event------
+const increaseQuantity = (i) => {
+    SetProducts((preValue) =>
+        preValue.map((data, o) => {
+            if (i === o) {
+                return {
+                    ...data,
+                    qty: data.qty + 1
+                };
+            }
+            return data;
+        })
+    );
+};
+
+// -----Decrement Event------
+const decreaseQuantity = (i) => {
+    SetProducts((preValue) =>
+        preValue.map((data, o) => {
+            if (i === o) {
+                if (data.qty > 1) {
+                    return { ...data, qty: data.qty - 1 };
+                } else {
+                    return data;
+                }
+            }
+            return data;
+        })
+    );
+};
+
+
+
+// -----Remove Event------
+const removeFromCart = (i) => {
+    if (window.confirm("Are you sure you want to remove into your cart?")) {
+        SetProducts(prevCart =>
+            prevCart.filter((item, o) => {
+                return i !== o;
+            })
+        );
+       
+    } else {
+        // alert('No');
+    }
+};
+
+
+// -empty-cart--------
+const emptycart = () => {
+    if (window.confirm("Remove all items into your cart?")) {
+        SetProducts([]);
+    } else {
+        // alert('No');
+    }
+}
+
+// ------Total Product Incart and Total Price of cart
+const cartTotalQty = products.reduce((acc, data) => acc + data.qty, 0);
+const cartTotalAmount = products.reduce((acc, data) => acc + data.price * data.qty, 0);
+
+
+
+return(
+    
+   <div className="row justify-content-center m-0">
+                <div className="col-md-8 mt-5 mb-5">
+                    <div className="card">
+                        <div className="card-header p-3">
+                            <div className="card-header-flex">
+                                <h5 className="text-dark m-0">User Management</h5>
+                                {
+                                    products.length > 0 ? <button className="btn btn-danger mt-0 btn-sm" onClick={() => emptycart()}><i className="fa fa-trash-alt mr-2"></i><span>Empty Cart</span></button> : ''}
+                            </div>
+                        </div>
+                        <div className="card-body p-0">
+                            {
+                                products.length === 0 ? <table className="table cart-table mb-0">
+                                    <tbody>
+                                        <tr>
+                                            <td colSpan="6">
+                                                <div className="cart-empty">
+                                                    <i className="fa fa-shopping-cart"></i>
+                                                    <p>Your Cart Is empty</p>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table> :
+                                    <table className="table cart-table mb-0">
+                                        <thead>
+                                            <tr>
+                                                <th>User ID</th>
+                                                <th>Image</th>
+                                                <th>Gender</th>
+                                                <th>Username</th>
+                                                <th>Date of Birth</th>
+                                                <th>Email</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {
+                                                products.map((data, index) => {
+                                                    const { id, image, name, price, qty } = data;
+                                                    return (
+                                                        <tr key={index}>
+                                                            <td><button className="prdct-delete" onClick={() => removeFromCart(index)}><i className="fa fa-trash-alt"></i></button></td>
+                                                            <td><div className="product-img"><img src={image} alt="" /></div></td>
+                                                            <td><div className="product-name"><p>{name}</p></div></td>
+                                                            <td>${price}</td>
+                                                            <td>
+                                                                <div className="prdct-qty-container">
+                                                                    <button className="prdct-qty-btn" type="button" onClick={() => decreaseQuantity(index)}>
+                                                                        <i className="fa fa-minus"></i>
+                                                                    </button>
+                                                                    <input type="text" name="qty" className="qty-input-box" value={qty} disabled />
+                                                                    <button className="prdct-qty-btn" type="button" onClick={() => increaseQuantity(index)}>
+                                                                        <i className="fa fa-plus"></i>
+                                                                    </button>
+                                                                </div>
+                                                            </td>
+                                                            <td>hai</td>
+                                                            <td className="text-right"> <button className="btn btn-danger mt-0 btn-sm"><span>Edit profile</span></button></td>
+                                                        </tr>
+                                                    )
+                                                })
+                                            }
+                                        </tbody>
+                                    </table>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+   
+);
 }
 
 export default UserManaging;

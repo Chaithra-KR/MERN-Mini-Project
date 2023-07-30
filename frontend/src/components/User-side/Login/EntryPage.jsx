@@ -23,16 +23,16 @@ const EntryPage = () => {
                   <input type="text" id="username" required/>
                 </li>
                 <li>
-                  <label htmlFor="gender">Gender</label>
+                  <label htmlFor="gender">Gender :</label>
                   <input type="text" id="gender" required/>
                 </li>
                 <li>
-                  <label htmlFor="dob">DOB</label>
+                  <label htmlFor="dob">Date of Birth:</label>
                   <input type="date" id="dob" required/>
                 </li>
                 <li>
-                  <label htmlFor="about">About:</label>
-                  <input type="text" id="about" required/>
+                  <label htmlFor="profilePic">Image :</label>
+                  <input type="file" id="profilePic" required/>
                 </li>
                 <li>
                   <label htmlFor="email">Email:</label>

@@ -1,14 +1,37 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate} from "react-router-dom";
+import {useSelector} from 'react-redux';
+import {UserAPI} from '../../../API';
+import Axios from 'axios';
 import './Profile.css';
 
 
 const Profile = () => {
     const [selectedFile, setSelectedFile] = useState(null);
 
-  const handleFileChange = (event) => {
-    const file = event.target.files[0];
-    setSelectedFile(file);
-  };
+    const navigate = useNavigate();
+    const User = useSelector((state) => state.user.userToken);
+    const [userData, setUserData] = useState({});
+
+    if (!User) {
+        navigate('/')
+    }
+
+    useEffect(() => {
+        Axios.get(`${UserAPI}profile`, { withCredentials: true })
+          .then((response) => {
+            setUserData(response.data.user);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }, []);
+
+    const handleFileChange = (event) => {
+        const file = event.target.files[0];
+        setSelectedFile(file);
+    };
+
   return (
         <div className='hey'>
         <div class="profile-card">  
@@ -18,11 +41,11 @@ const Profile = () => {
                 <div className="upload-button">
                     <input type="file" id="fileInput" onChange={handleFileChange} />
                     <label htmlFor="fileInput" className='changePic'>
-                        Change pic
+                        Change Profile Picture
                     </label>
                     {selectedFile && <p>Selected file: {selectedFile.name}</p>}
                 </div>
-                <h3 class="profile-name">username</h3>
+                <h3 class="profile-name">hai,{User ? userData.username : ""}</h3>
                 <p class="profile-desc">this is you about bow!</p>
                 <div class="profile-details">
                 <label>Email:</label><span>helo@gmail</span><br />

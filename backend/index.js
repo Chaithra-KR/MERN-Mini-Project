@@ -1,37 +1,47 @@
-const express = require('express')
-const mongoose = require('mongoose')
-const app = express()
-const cors = require('cors')
-const dotenv = require('dotenv')
+const express = require('express');
+const mongoose = require('mongoose');
+const app = express();
+const cors = require('cors');
+const dotenv = require('dotenv');
+const cookieParser = require('cookie-parser');
 
-//setting routers
-const userRouter = require("./routers/userRouter")
-const adminRouter = require("./routers/adminRouter")
-app.set("/admin",adminRouter)
-app.set("/",userRouter)
+// Setting routers
+const userRouter = require('./routers/userRouter');
+const adminRouter = require('./routers/adminRouter');
+// Connecting to MongoDB
+mongoose.connect("mongodb://127.0.0.1:27017/Blossom", {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => {
+    console.log('Database connected');
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+// Load environment variables from .env file
+dotenv.config();
 
+app.use(cookieParser());
+// Middleware
+app.use(express.urlencoded({extended:false}))
 
-//cors
 app.use(express.json());
 app.use(cors({
-    origin:[process.env,CORS_ORIGIN],
-    methods:['GET','POST'],
-    credentials:true,
-    allowedHeaders:['Content-Type','Access']
-}))
+  origin: 'http://localhost:3000',
+  methods: ['GET', 'POST'],
+  credentials: true,
+  allowedHeaders: ['Content-Type', 'Access'],
+}));
+app.use('/', userRouter);
 
-//connecting mongoose
-mongoose.connect(process.env.MONGO)
-.then((res)=>{
-    console.log("Database connected");
-}).catch((err)=>{
-    console.log(err);
-})
+// Set port
+const PORT = process.env.PORT || 4000;
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
+
+// Set routes
 
 
-//setting port
-let PORT = 4000;
-app.listen(PORT,(req,res)=>{
-    console.log("server is running");
-})
 
